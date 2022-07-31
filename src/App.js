@@ -1,13 +1,13 @@
 import './App.css';
 import {Navbar, Container, Nav, Row, Col} from 'react-bootstrap';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import data from './routes/Data';
 import Detail from './Detail';
 import {Routes, Route, Link, Outlet} from 'react-router-dom'
 import axios from 'axios';
+import Cart from './routes/Cart'
 
 export let Context1 = createContext();
-
 
 function App() {
 
@@ -64,10 +64,12 @@ let [stock] = useState([10,11,12]);
           }
         />
         <Route path="/detail/:id" element={
-          <context1.Provider value={{stock, pen}}>
+          <Context1.Provider value={{stock}}>
             <Detail pen={pen}/>
-          </context1.Provider> 
+          </Context1.Provider>
         } />
+
+        <Route path='/cart' element={<Cart/>}/>
 
         <Route path="/about" element={<About/>}>
           <Route path="member" element={<div>멤버다</div>}/>

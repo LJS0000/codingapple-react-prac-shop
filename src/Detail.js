@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
 import { Nav} from 'react-bootstrap';
 import './App.css';
-import {Context1} from './../App.js'
+
+import {Context1} from './App.js'
+import {addItem} from './store.js'
+import {useDispatch} from 'react-redux'
+
 
 function Detail(props){
+
+    let {stock} = useContext(Context1)
 
     let [fade2, setFade2] = useState('')
 
@@ -12,6 +18,7 @@ function Detail(props){
     let [alert, setAlert] = useState(true);
     let [num, setNum] = useState('');
     let [tab, setTab] = useState(0);
+    let dispatch = useDispatch();
 
     useEffect(()=>{
         setTimeout(() => {setFade2("end")}, 100)
@@ -41,6 +48,7 @@ function Detail(props){
         >
           버튼
         </button>
+
         <div className="row">
           <div className="col-md-6">
             <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
@@ -54,7 +62,9 @@ function Detail(props){
             <h4 className="pt-5">{sortpen.title}</h4>
             <p>{sortpen.content}</p>
             <p>{sortpen.price}</p>
-            <button className="btn btn-danger">주문하기</button>
+            <button className="btn btn-danger" onClick={()=>{
+              dispatch(addItem({id : 1, name : 'Red Knit', count : 1}))
+            }}>주문하기</button>
           </div>
         </div>
 
@@ -75,7 +85,9 @@ function Detail(props){
     )
   }
 
-function TabContent({tab, pen}){
+function TabContent({tab}){
+
+    let {stock} = useContext(Context1)
 
     let [fade, setFade] = useState('')
 
@@ -85,7 +97,7 @@ function TabContent({tab, pen}){
     }, [tab])
 
     return <div className={'start '+ fade}>
-        {[<div>{pen[0].title}</div>,<div>내용1</div>,<div>내용2</div>][tab]}
+        {[<div>내용0</div>,<div>내용1</div>,<div>내용2</div>][tab]}
     </div>
 }
   
